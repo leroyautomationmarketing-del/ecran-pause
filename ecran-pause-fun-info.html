@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pause !</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap">
+<style>
+:root{box-sizing:border-box;--bg:#FFD23F;--ink:#2B1B5A;--card:#FFF8E1;--accent:#FF4F8B}
+*{box-sizing:inherit}
+html,body{height:100%;margin:0;overflow:hidden;background:#FFD23F}
+body{font-family:'Fredoka','Trebuchet MS',Arial,sans-serif;color:var(--ink);font-size:min(1.6vw,2.8vh);transition:background .8s}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5em 7em;opacity:0;visibility:hidden;transition:opacity .8s}
+.slide.on{opacity:1;visibility:visible}
+.tag{background:var(--ink);color:#fff;font-weight:700;font-size:2em;padding:.3em 1.2em;border-radius:99em;transform:rotate(-3deg);margin-bottom:1em}
+.big{font-weight:700;font-size:4.2em;line-height:1.15;max-width:19em;margin:0}
+.mid{font-weight:600;font-size:3.2em;line-height:1.25;max-width:22em;margin:0}
+.punch{margin-top:.8em;font-weight:700;font-size:4.6em;color:var(--accent);background:var(--card);padding:.2em .7em;border-radius:.5em;transform:rotate(1.5deg);box-shadow:.15em .15em 0 var(--ink);opacity:0}
+.on .punch{animation:pop .6s 6s forwards cubic-bezier(.3,1.6,.5,1)}
+@keyframes pop{from{opacity:0;transform:scale(.3) rotate(-8deg)}to{opacity:1;transform:scale(1) rotate(1.5deg)}}
+.emoji{position:absolute;font-size:9em;opacity:.9}
+.e1{left:.4em;top:.2em;transform:rotate(-12deg)}.e2{right:.4em;bottom:.5em;transform:rotate(10deg)}
+.count{font-size:11em;font-weight:700;line-height:1;color:var(--accent);text-shadow:.04em .04em 0 var(--ink)}
+.s-blague{--bg:#FFD23F;--accent:#FF4F8B}.s-anec{--bg:#3DD9C8;--accent:#6C2BD9}.s-pos{--bg:#FF8FB1;--accent:#1A9E8F}.s-mission{--bg:#B79CFF;--accent:#FF6B1A}.s-we{--bg:#FF9F45;--accent:#2B1B5A}
+.slide{background:var(--bg)}
+#bar{position:fixed;left:0;right:0;bottom:0;height:.5em;background:rgba(43,27,90,.2)}
+#bar i{display:block;height:100%;width:0;background:var(--ink)}
+#clock{position:fixed;right:1em;top:.6em;font-weight:700;font-size:2.4em;background:var(--ink);color:#fff;padding:.1em .6em;border-radius:99em;z-index:5}
+@media (prefers-reduced-motion:reduce){.on .punch{animation:none;opacity:1}}
+</style>
+</head>
+<body>
+<div id="clock"></div>
+
+<section class="slide s-blague" data-d="14000">
+ <span class="emoji e1">😂</span><span class="emoji e2">🤪</span>
+ <div class="tag">La blague du jour</div>
+ <p class="big" id="jq"></p><div class="punch" id="ja"></div>
+</section>
+
+<section class="slide s-anec" data-d="14000">
+ <span class="emoji e1">🤯</span><span class="emoji e2">🧠</span>
+ <div class="tag">Le saviez-vous ?</div>
+ <p class="mid" id="an"></p>
+</section>
+
+<section class="slide s-pos" data-d="14000">
+ <span class="emoji e1">🌈</span><span class="emoji e2">🌍</span>
+ <div class="tag">Bonne nouvelle !</div>
+ <p class="mid" id="po"></p>
+</section>
+
+<section class="slide s-mission" data-d="12000">
+ <span class="emoji e1">🎯</span><span class="emoji e2">✨</span>
+ <div class="tag">Mission du jour</div>
+ <p class="big" id="mi"></p>
+</section>
+
+<section class="slide s-we" data-d="10000">
+ <span class="emoji e1">🎉</span><span class="emoji e2">🏖️</span>
+ <div class="tag">Direction le week-end</div>
+ <div class="count" id="cn"></div><p class="mid" id="cl"></p>
+</section>
+
+<div id="bar"><i id="fill"></i></div>
+
+<script>
+// ✏️ Modifie librement ces listes : un élément par jour, ça tourne tout seul.
+var BLAGUES=[
+["Qu'est-ce qui est jaune et qui attend ?","Jonathan."],
+["Quel est le comble pour un électricien ?","De ne pas être au courant."],
+["Quel est le comble pour un jardinier ?","De raconter des salades."],
+["Que dit un oignon quand il se cogne ?","Aïe !"],
+["Pourquoi les plongeurs plongent-ils toujours en arrière ?","Sinon ils tombent dans le bateau."],
+["Pourquoi les squelettes ne se battent-ils jamais ?","Ils n'ont pas les tripes."],
+["Que fait une fraise sur un cheval ?","Tagada tagada !"],
+["Comment appelle-t-on un chat tombé dans un pot de peinture ?","Un chat-peint… de Noël !"],
+["J'allais faire une blague sur les réunions…","Mais elle aurait pu être un e-mail."],
+["Quel est le comble pour un cordonnier ?","D'avoir les pieds sur terre… et de marcher sur la semelle."]
+];
+var ANECDOTES=[
+"Les poulpes ont trois cœurs et du sang bleu.",
+"Le miel ne se périme pratiquement jamais : on en a retrouvé de comestible dans des tombes antiques.",
+"La tour Eiffel peut grandir de quelques centimètres en été, à cause de la chaleur qui dilate le métal.",
+"Les loutres de mer se tiennent la patte pendant leur sommeil pour ne pas dériver chacune de leur côté.",
+"Botaniquement, la banane est une baie… mais pas la fraise !",
+"Sur Vénus, un jour dure plus longtemps qu'une année.",
+"Les wombats font des crottes en forme de cubes.",
+"Les vaches ont des meilleures amies et sont plus stressées quand elles en sont séparées."
+];
+var POSITIF=[
+"Le trou de la couche d'ozone se résorbe peu à peu : retour aux niveaux de 1980 attendu vers 2066 au-dessus de l'Antarctique.",
+"Le panda géant n'est plus classé « en danger » mais « vulnérable » depuis 2016.",
+"La variole a été totalement éradiquée en 1980 : une maladie qui a tué des millions de personnes a disparu.",
+"L'espérance de vie dans le monde a plus que doublé depuis 1900.",
+"Les populations de tigres sauvages sont en hausse depuis 2010 grâce à la protection de leurs territoires.",
+"Beaucoup de populations de baleines à bosse se sont reconstituées depuis l'arrêt de la chasse commerciale."
+];
+var MISSIONS=[
+"Dis merci à un collègue pour un petit truc qu'il a fait.",
+"Prends 5 minutes pour discuter avec quelqu'un d'un autre service.",
+"Complimente quelqu'un, sincèrement.",
+"Offre le café à la personne à côté de toi.",
+"Étire-toi et bois un grand verre d'eau.",
+"Invite quelqu'un que tu connais peu à déjeuner.",
+"Partage un truc qui t'a fait sourire cette semaine."
+];
+function today(){var d=new Date();return Math.floor((d.getTime()-d.getTimezoneOffset()*60000)/864e5)}
+function pick(a){return a[today()%a.length]}
+function setText(){
+  var j=pick(BLAGUES);
+  document.getElementById('jq').textContent=j[0];
+  document.getElementById('ja').textContent=j[1];
+  document.getElementById('an').textContent=pick(ANECDOTES);
+  document.getElementById('po').textContent=pick(POSITIF);
+  document.getElementById('mi').textContent=pick(MISSIONS);
+}
+function weekend(){
+  var n=new Date(),d=n.getDay(),h=n.getHours();
+  var cn=document.getElementById('cn'),cl=document.getElementById('cl');
+  if(d===0||d===6||(d===5&&h>=17)){cn.textContent='🎊';cl.textContent="C'est le week-end, profitez-en bien !";return}
+  if(d===5){var r=17-h;cn.textContent=r+' h';cl.textContent="avant le week-end. Courage, on y est presque !";return}
+  var left=5-d;cn.textContent=left+(left>1?' jours':' jour');cl.textContent="avant le week-end (vendredi 17h)";
+}
+function clock(){var n=new Date();document.getElementById('clock').textContent=('0'+n.getHours()).slice(-2)+':'+('0'+n.getMinutes()).slice(-2)}
+var slides=[].slice.call(document.querySelectorAll('.slide')),i=-1,t;
+function next(){
+  i=(i+1)%slides.length;
+  if(i===0){setText();weekend()}
+  slides.forEach(function(s,k){s.classList.toggle('on',k===i)});
+  document.body.style.background=getComputedStyle(slides[i]).getPropertyValue('--bg');
+  var d=+slides[i].dataset.d,f=document.getElementById('fill');
+  f.style.transition='none';f.style.width='0';f.offsetWidth;f.style.transition='width '+d+'ms linear';f.style.width='100%';
+  clearTimeout(t);t=setTimeout(next,d);
+}
+setText();weekend();clock();setInterval(clock,10000);next();
+</script>
+</body>
+</html>
