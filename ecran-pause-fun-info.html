@@ -10,20 +10,27 @@
 *{box-sizing:inherit}
 html,body{height:100%;margin:0;overflow:hidden;background:#FFD23F}
 body{font-family:'Fredoka','Trebuchet MS',Arial,sans-serif;color:var(--ink);font-size:min(1.6vw,2.8vh);transition:background .8s}
-.slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5em 7em;opacity:0;visibility:hidden;transition:opacity .8s}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:4em 6em;opacity:0;visibility:hidden;transition:opacity .8s;background:var(--bg);overflow:hidden}
 .slide.on{opacity:1;visibility:visible}
-.tag{background:var(--ink);color:#fff;font-weight:700;font-size:2em;padding:.3em 1.2em;border-radius:99em;transform:rotate(-3deg);margin-bottom:1em}
-.big{font-weight:700;font-size:4.2em;line-height:1.15;max-width:19em;margin:0}
-.mid{font-weight:600;font-size:3.2em;line-height:1.25;max-width:22em;margin:0}
-.punch{margin-top:.8em;font-weight:700;font-size:4.6em;color:var(--accent);background:var(--card);padding:.2em .7em;border-radius:.5em;transform:rotate(1.5deg);box-shadow:.15em .15em 0 var(--ink);opacity:0}
-.on .punch{animation:pop .6s 6s forwards cubic-bezier(.3,1.6,.5,1)}
+.slide:before,.slide:after{content:"";position:absolute;border-radius:50%;background:var(--accent);opacity:.18}
+.slide:before{width:16em;height:16em;left:-5em;top:-5em}
+.slide:after{width:22em;height:22em;right:-8em;bottom:-9em}
+.slide>*{position:relative;z-index:1}
+.tag{background:var(--ink);color:#fff;font-weight:700;font-size:2em;padding:.3em 1.2em;border-radius:99em;transform:rotate(-2deg);margin-bottom:.9em}
+.big{font-weight:700;font-size:4em;line-height:1.15;max-width:19em;margin:0}
+.mid{font-weight:600;font-size:3em;line-height:1.25;max-width:22em;margin:0}
+.sm{font-weight:600;font-size:2.2em;line-height:1.3;max-width:30em;margin:.5em 0 0}
+.punch{margin-top:.8em;font-weight:700;font-size:4.4em;color:var(--accent);background:var(--card);padding:.2em .7em;border-radius:.5em;transform:rotate(1.5deg);box-shadow:.15em .15em 0 var(--ink);opacity:0}
+.on .punch{animation:pop .6s 9s forwards cubic-bezier(.3,1.6,.5,1)}
 @keyframes pop{from{opacity:0;transform:scale(.3) rotate(-8deg)}to{opacity:1;transform:scale(1) rotate(1.5deg)}}
-.emoji{position:absolute;font-size:9em;opacity:.9}
-.e1{left:.4em;top:.2em;transform:rotate(-12deg)}.e2{right:.4em;bottom:.5em;transform:rotate(10deg)}
-.count{font-size:11em;font-weight:700;line-height:1;color:var(--accent);text-shadow:.04em .04em 0 var(--ink)}
-.s-blague{--bg:#FFD23F;--accent:#FF4F8B}.s-anec{--bg:#3DD9C8;--accent:#6C2BD9}.s-pos{--bg:#FF8FB1;--accent:#1A9E8F}.s-mission{--bg:#B79CFF;--accent:#FF6B1A}.s-we{--bg:#FF9F45;--accent:#2B1B5A}
-.slide{background:var(--bg)}
-#bar{position:fixed;left:0;right:0;bottom:0;height:.5em;background:rgba(43,27,90,.2)}
+.count{font-size:10em;font-weight:700;line-height:1;color:var(--accent);text-shadow:.04em .04em 0 var(--ink)}
+.lbl{font-weight:700;font-size:2.2em;margin-top:.5em}
+.pill{display:inline-block;background:var(--card);padding:.1em .6em;border-radius:99em;margin:.12em;font-weight:600;font-size:2.4em;box-shadow:.06em .06em 0 var(--ink)}
+.star{margin-top:.8em;font-weight:700;font-size:2.6em;color:var(--accent);background:var(--card);padding:.15em .7em;border-radius:.5em;box-shadow:.1em .1em 0 var(--ink)}
+.wrow{background:var(--card);border-radius:.6em;padding:.25em .9em;margin-top:.5em;font-weight:600;font-size:2em;box-shadow:.08em .08em 0 var(--ink);max-width:34em}
+.s-blague{--bg:#FFD23F;--accent:#FF4F8B}.s-fait{--bg:#FF9F45;--accent:#2B1B5A}.s-rec{--bg:#9BE564;--accent:#D6336C}.s-anec{--bg:#3DD9C8;--accent:#6C2BD9}.s-meteo{--bg:#7CC8FF;--accent:#FF6B1A}.s-fl{--bg:#FFB3C7;--accent:#1A9E8F}.s-pos{--bg:#FF8FB1;--accent:#1A9E8F}.s-mission{--bg:#B79CFF;--accent:#FF6B1A}.s-we{--bg:#FFE066;--accent:#FF4F8B}.s-news{--bg:#A8E6CF;--accent:#0A439B}.s-hist{--bg:#FFCBA4;--accent:#2B1B5A}
+.steps{text-align:left;font-weight:600;font-size:1.6em;line-height:1.35;max-width:42em;margin:.5em 0 0;padding-left:1.3em}.steps li{margin:.2em 0}
+#bar{position:fixed;left:0;right:0;bottom:0;height:.5em;background:rgba(43,27,90,.2);z-index:5}
 #bar i{display:block;height:100%;width:0;background:var(--ink)}
 #clock{position:fixed;right:1em;top:.6em;font-weight:700;font-size:2.4em;background:var(--ink);color:#fff;padding:.1em .6em;border-radius:99em;z-index:5}
 @media (prefers-reduced-motion:reduce){.on .punch{animation:none;opacity:1}}
@@ -32,108 +39,376 @@ body{font-family:'Fredoka','Trebuchet MS',Arial,sans-serif;color:var(--ink);font
 <body>
 <div id="clock"></div>
 
-<section class="slide s-blague" data-d="14000">
- <span class="emoji e1">😂</span><span class="emoji e2">🤪</span>
- <div class="tag">La blague du jour</div>
- <p class="big" id="jq"></p><div class="punch" id="ja"></div>
+<section class="slide s-blague" data-d="20000">
+<div class="tag">La blague du jour</div>
+<p class="big" id="jq"></p><div class="punch" id="ja"></div>
 </section>
 
-<section class="slide s-anec" data-d="14000">
- <span class="emoji e1">🤯</span><span class="emoji e2">🧠</span>
- <div class="tag">Le saviez-vous ?</div>
- <p class="mid" id="an"></p>
+<section class="slide s-fait" data-d="22000">
+<div class="tag" id="ft"></div>
+<p class="mid" id="ff"></p>
 </section>
 
-<section class="slide s-pos" data-d="14000">
- <span class="emoji e1">🌈</span><span class="emoji e2">🌍</span>
- <div class="tag">Bonne nouvelle !</div>
- <p class="mid" id="po"></p>
+<section class="slide s-rec" data-d="35000">
+<div class="tag" id="rt"></div>
+<p class="big" id="rn" style="font-size:3.2em"></p>
+<div class="pill" id="rm" style="font-size:1.7em;margin:.4em 0"></div>
+<p class="sm" id="ri" style="font-size:1.6em;margin:.2em 0"></p>
+<ol class="steps" id="rs"></ol>
 </section>
 
-<section class="slide s-mission" data-d="12000">
- <span class="emoji e1">🎯</span><span class="emoji e2">✨</span>
- <div class="tag">Mission du jour</div>
- <p class="big" id="mi"></p>
+<section class="slide s-anec" data-d="18000">
+<div class="tag">Le saviez-vous ?</div>
+<p class="mid" id="an"></p>
 </section>
 
-<section class="slide s-we" data-d="10000">
- <span class="emoji e1">🎉</span><span class="emoji e2">🏖️</span>
- <div class="tag">Direction le week-end</div>
- <div class="count" id="cn"></div><p class="mid" id="cl"></p>
+<section class="slide s-meteo off" id="sw" data-d="24000">
+<div class="tag">La météo, version franche</div>
+<p class="big" id="w0" style="font-size:3.4em">Chargement de la météo…</p>
+<div class="lbl" id="w0t"></div>
+<div class="wrow" id="w1" style="display:none"></div>
+<div class="wrow" id="w2" style="display:none"></div>
+</section>
+
+<section class="slide s-fl" data-d="26000">
+<div class="tag" id="ft2"></div>
+<div class="lbl">Fruits</div><div id="fr"></div>
+<div class="lbl">Légumes</div><div id="lg"></div>
+<div class="star" id="st"></div>
+<p class="sm" id="sf" style="font-size:1.9em"></p>
+</section>
+
+<section class="slide s-hist off" id="sh" data-d="22000">
+<div class="tag">Ce jour-là dans l’histoire</div>
+<div class="count" id="hy" style="font-size:7em"></div>
+<p class="mid" id="ht" style="font-size:2.6em"></p>
+<p class="sm" style="font-size:1.4em">Source : Wikipédia (CC BY-SA)</p>
+</section>
+
+<section class="slide s-news" id="sn" data-d="20000">
+<div class="tag">L’actu positive de la semaine</div>
+<p class="mid" id="nt"></p>
+<p class="sm" id="ns"></p>
+</section>
+
+<section class="slide s-pos" data-d="18000">
+<div class="tag">Bonne nouvelle !</div>
+<p class="mid" id="po"></p>
+</section>
+
+<section class="slide s-mission" data-d="15000">
+<div class="tag">Mission du jour</div>
+<p class="big" id="mi"></p>
+</section>
+
+<section class="slide s-we" data-d="12000">
+<div class="tag">Direction le week-end</div>
+<div class="count" id="cn"></div><p class="mid" id="cl"></p>
+<p class="sm" id="jf"></p>
 </section>
 
 <div id="bar"><i id="fill"></i></div>
 
 <script>
-// ✏️ Modifie librement ces listes : un élément par jour, ça tourne tout seul.
+// Modifie librement ces listes : tout tourne tout seul, jour après jour.
 var BLAGUES=[
-["Qu'est-ce qui est jaune et qui attend ?","Jonathan."],
+["Qu’est-ce qui est jaune et qui attend ?","Jonathan."],
 ["Quel est le comble pour un électricien ?","De ne pas être au courant."],
 ["Quel est le comble pour un jardinier ?","De raconter des salades."],
 ["Que dit un oignon quand il se cogne ?","Aïe !"],
 ["Pourquoi les plongeurs plongent-ils toujours en arrière ?","Sinon ils tombent dans le bateau."],
-["Pourquoi les squelettes ne se battent-ils jamais ?","Ils n'ont pas les tripes."],
+["Pourquoi les squelettes ne se battent-ils jamais ?","Ils n’ont pas les tripes."],
 ["Que fait une fraise sur un cheval ?","Tagada tagada !"],
-["Comment appelle-t-on un chat tombé dans un pot de peinture ?","Un chat-peint… de Noël !"],
-["J'allais faire une blague sur les réunions…","Mais elle aurait pu être un e-mail."],
-["Quel est le comble pour un cordonnier ?","D'avoir les pieds sur terre… et de marcher sur la semelle."]
+["J’allais faire une blague sur les réunions…","Mais elle aurait pu être un e-mail."],
+["Quel est le comble pour un boulanger ?","De rester dans la croûte."],
+["Pourquoi les poules ne se plaignent-elles jamais ?","Parce qu’elles ont toujours un œuf à pondre."],
+["Qu’est-ce qu’un crocodile qui surveille la pharmacie ?","Un Lacoste garde."],
+["Que dit une imprimante dans l’eau ?","J’ai papier."],
+["Pourquoi le livre de maths est-il triste ?","Il a trop de problèmes."],
+["Comment appelle-t-on un boomerang qui ne revient pas ?","Un bâton."],
+["Que dit un fantôme au café ?","Je prendrais bien un expresso… sans corps."],
+["Quel est le comble pour un informaticien ?","D’avoir un chat et de se faire manger sa souris."],
+["Quelle est la fée la plus drôle ?","La fée des lunettes… elle fait de l’effet."],
+["Pourquoi les mécaniciens sont-ils toujours détendus ?","Ils ont toujours un cric dans la poche."],
+["Que dit le 0 au 8 ?","Jolie ceinture !"],
+["Pourquoi les poissons détestent-ils l’ordinateur ?","Parce qu’ils ont peur du net."],
+["Quel est l’animal le plus rapide du monde ?","Le pou : il est toujours en tête."],
+["Qu’est-ce qui est vert et qui monte et descend ?","Un petit pois dans un ascenseur."],
+["Comment appelle-t-on un chien sans pattes ?","On ne l’appelle pas, on va le chercher."],
+["Que fait un geek quand il a peur ?","Il passe en mode sans échec."],
+["Pourquoi le wifi est-il le collègue idéal ?","Il est toujours connecté… sauf quand on a besoin de lui."],
+["Quel est le sport le plus fruité ?","La boxe : il y a des pêches et des coings."]
 ];
 var ANECDOTES=[
 "Les poulpes ont trois cœurs et du sang bleu.",
 "Le miel ne se périme pratiquement jamais : on en a retrouvé de comestible dans des tombes antiques.",
-"La tour Eiffel peut grandir de quelques centimètres en été, à cause de la chaleur qui dilate le métal.",
+"La tour Eiffel peut grandir de quelques centimètres en été, car la chaleur dilate le métal.",
 "Les loutres de mer se tiennent la patte pendant leur sommeil pour ne pas dériver chacune de leur côté.",
 "Botaniquement, la banane est une baie… mais pas la fraise !",
-"Sur Vénus, un jour dure plus longtemps qu'une année.",
+"Sur Vénus, un jour dure plus longtemps qu’une année.",
 "Les wombats font des crottes en forme de cubes.",
-"Les vaches ont des meilleures amies et sont plus stressées quand elles en sont séparées."
+"Les vaches ont des meilleures amies et sont plus stressées quand elles en sont séparées.",
+"Les girafes ont sept vertèbres dans le cou, comme nous. Elles sont juste beaucoup plus longues.",
+"Un éclair est environ cinq fois plus chaud que la surface du Soleil.",
+"Le cœur d’une crevette se trouve dans sa tête.",
+"Les chats ne perçoivent pas le goût sucré.",
+"Un nuage cumulus moyen pèse à peu près autant que 80 éléphants.",
+"Les abeilles peuvent reconnaître des visages humains.",
+"Les pieuvres ont des bras qui « réfléchissent » en partie par eux-mêmes : la majorité de leurs neurones y sont.",
+"Les bananiers sont des herbes géantes, pas des arbres.",
+"Leo Fender, le créateur des célèbres guitares électriques Fender, ne savait pas en jouer.",
+"Les M&M’s tirent leur nom des initiales de leurs deux inventeurs, Forrest Mars et Bruce Murrie.",
+"Les bananes sont courbées parce qu’elles poussent vers le haut, à contre-courant de la gravité.",
+"Dans les années 1830, le ketchup a été vendu comme un médicament.",
+"Mariner 4 a été la première sonde à survoler Mars, en 1965.",
+"Un paresseux bouge si peu que des algues poussent parfois sur son pelage.",
+"La tour de Pise penche depuis son chantier : elle n’a jamais été droite.",
+"Le Soudan compte beaucoup plus de pyramides que l’Égypte.",
+"Un bébé naît avec environ 300 os, contre 206 pour un adulte : certains se soudent en grandissant.",
+"Une puce peut sauter plus de 100 fois sa propre taille.",
+"Frankenstein n’est pas le monstre : c’est le nom du savant qui le crée.",
+"Un vélociraptor avait à peu près la taille d’une dinde, bien loin de ce qu’on voit au cinéma.",
+"Une Sud-Coréenne a obtenu son permis de conduire après 959 échecs. Quelle persévérance !",
+"En Argentine, un homme a planté une forêt en forme de guitare, visible depuis le ciel.",
+"La guerre anglo-zanzibarite de 1896 est considérée comme la plus courte de l’histoire : moins d’une heure.",
+"Le concombre est composé à environ 95 % d’eau.",
+"Beaucoup de wasabi servi hors du Japon est en réalité du raifort coloré en vert."
 ];
 var POSITIF=[
-"Le trou de la couche d'ozone se résorbe peu à peu : retour aux niveaux de 1980 attendu vers 2066 au-dessus de l'Antarctique.",
-"Le panda géant n'est plus classé « en danger » mais « vulnérable » depuis 2016.",
+"Le trou de la couche d’ozone se résorbe peu à peu : un retour aux niveaux de 1980 est attendu vers 2066 au-dessus de l’Antarctique.",
+"Le panda géant n’est plus classé « en danger » mais « vulnérable » depuis 2016.",
 "La variole a été totalement éradiquée en 1980 : une maladie qui a tué des millions de personnes a disparu.",
-"L'espérance de vie dans le monde a plus que doublé depuis 1900.",
+"L’espérance de vie dans le monde a plus que doublé depuis 1900.",
 "Les populations de tigres sauvages sont en hausse depuis 2010 grâce à la protection de leurs territoires.",
-"Beaucoup de populations de baleines à bosse se sont reconstituées depuis l'arrêt de la chasse commerciale."
+"Beaucoup de populations de baleines à bosse se sont reconstituées depuis l’arrêt de la chasse commerciale.",
+"La mortalité infantile dans le monde a été divisée par plus de deux depuis 1990.",
+"L’énergie solaire est devenue l’une des sources d’électricité les moins chères de l’histoire."
 ];
 var MISSIONS=[
-"Dis merci à un collègue pour un petit truc qu'il a fait.",
-"Prends 5 minutes pour discuter avec quelqu'un d'un autre service.",
-"Complimente quelqu'un, sincèrement.",
+"Dis merci à un collègue pour un petit truc qu’il a fait.",
+"Prends 5 minutes pour discuter avec quelqu’un d’un autre service.",
+"Complimente quelqu’un, sincèrement.",
 "Offre le café à la personne à côté de toi.",
-"Étire-toi et bois un grand verre d'eau.",
-"Invite quelqu'un que tu connais peu à déjeuner.",
-"Partage un truc qui t'a fait sourire cette semaine."
+"Étire-toi et bois un grand verre d’eau.",
+"Invite quelqu’un que tu connais peu à déjeuner.",
+"Partage un truc qui t’a fait sourire cette semaine.",
+"Range une chose qui traîne depuis trop longtemps sur ton bureau.",
+"Sors prendre l’air 5 minutes, sans téléphone.",
+"Envoie un message sympa à un ancien collègue."
 ];
+// Un fun fact par jour, selon le mois en cours (index 0 = janvier).
+var SEAS=[
+["Nouvel an et galette",["La fève de la galette des rois était à l’origine une vraie fève ; la porcelaine l’a remplacée au XIXe siècle.","Le 1er janvier marque le début de l’année en France depuis 1564, sous Charles IX.","Début janvier, la Terre est au plus près du Soleil, et pourtant c’est l’hiver chez nous."]],
+["Saint-Valentin et Chandeleur",["Le plus ancien poème de Saint-Valentin connu aurait été écrit en 1415 par Charles d’Orléans, prisonnier à la tour de Londres.","À la Chandeleur, on fait sauter les crêpes avec une pièce dans la main pour attirer la prospérité.","Février est le seul mois de 28 jours, et il passe à 29 les années bissextiles."]],
+["Le printemps arrive",["Vers le 20 mars, à l’équinoxe, le jour et la nuit durent presque autant.","Le 14 mars, c’est la journée de Pi : 3,14.","Mars porte le nom du dieu romain Mars, et c’était le premier mois de l’ancien calendrier romain."]],
+["Poisson d’avril",["Une explication courante du poisson d’avril : Charles IX a déplacé le Nouvel An au 1er janvier, et on a continué à s’offrir de faux cadeaux le 1er avril.","Le 22 avril, c’est le Jour de la Terre, né aux États-Unis en 1970.","En avril, le temps change vite : soleil, averse, grêle… parfois dans la même heure."]],
+["Le mois du muguet",["Le muguet du 1er mai vient d’une tradition de 1561 : Charles IX en a reçu en porte-bonheur et a décidé d’en offrir chaque année.","Le Festival de Cannes existe depuis 1946.","Le 8 mai, on commémore la fin de la Seconde Guerre mondiale en Europe, en 1945."]],
+["Fête de la musique",["La fête de la musique est née en France en 1982, à l’initiative de Jack Lang.","Le solstice d’été, vers le 21 juin, est le jour le plus long de l’année.","Juin tiendrait son nom de Junon, déesse romaine du mariage."]],
+["Été et 14 juillet",["Le 14 juillet célèbre aussi la fête de la Fédération de 1790, pas seulement la prise de la Bastille.","Le Tour de France existe depuis 1903.","En juillet, la Terre est au plus loin du Soleil : l’été vient de l’inclinaison de la Terre, pas de la distance."]],
+["Les étoiles d’août",["Autour du 12 août, les Perséides illuminent le ciel : ce sont des poussières de comète qui brûlent.","Août doit son nom à l’empereur romain Auguste.","Chez les cigales, seuls les mâles chantent."]],
+["La rentrée",["L’équinoxe d’automne tombe vers le 22 septembre.","Septembre vient de « septem » : c’était le 7e mois du calendrier romain.","Il faut environ 1 à 1,5 kg de raisin pour faire une bouteille de vin."]],
+["Halloween",["Halloween vient de la fête celtique de Samain, qui marquait la fin de l’été.","En Irlande, on creusait d’abord des navets, et pas des citrouilles, pour fabriquer les lanternes d’Halloween.","La plus grosse citrouille jamais pesée dépasse une tonne."]],
+["Novembre",["Le Beaujolais nouveau sort chaque année le troisième jeudi de novembre.","Le 11 novembre commémore l’armistice de 1918.","À la Toussaint, il est de tradition en France de fleurir les tombes avec des chrysanthèmes."]],
+["Saint-Nicolas et Noël",["Saint Nicolas, fêté le 6 décembre, est le patron des enfants, notamment en Lorraine et dans l’est de la France.","Le plus ancien texte mentionnant un sapin de Noël date de 1521, à Sélestat en Alsace.","En Provence, on sert traditionnellement treize desserts à Noël."]]
+];
+// Une recette par semaine, selon la saison (4 par saison, on tourne).
+var REC={
+hiver:["Soupe de la semaine",[
+["Soupe à l’oignon gratinée","Pour 4 · Préparation 15 min · Cuisson 45 min","800 g d’oignons, 40 g de beurre, 1,2 l de bouillon, 4 tranches de pain, 150 g de gruyère râpé","Émincer les oignons et les faire fondre au beurre 25 min, sans les brûler|Mouiller avec le bouillon et laisser frémir 15 min|Verser dans des bols, poser le pain et le gruyère|Gratiner 5 à 8 min sous le gril du four"],
+["Soupe poireaux et pommes de terre","Pour 4 · Préparation 15 min · Cuisson 25 min","4 poireaux, 3 pommes de terre, 1 l de bouillon, 10 cl de crème, 20 g de beurre","Laver et couper les poireaux, éplucher les pommes de terre|Faire revenir les poireaux au beurre 5 min|Ajouter pommes de terre et bouillon, cuire 20 min|Mixer et finir avec la crème"],
+["Soupe de carottes au cumin","Pour 4 · Préparation 10 min · Cuisson 25 min","700 g de carottes, 1 oignon, 1 c. à café de cumin, 1 l de bouillon, 1 filet d’huile d’olive","Faire revenir l’oignon émincé à l’huile 3 min|Ajouter les carottes en rondelles et le cumin|Couvrir de bouillon et cuire 20 min|Mixer finement, saler et poivrer"],
+["Minestrone d’hiver","Pour 4 · Préparation 20 min · Cuisson 40 min","2 carottes, 2 branches de céleri, 1 oignon, 400 g de tomates concassées, 200 g de haricots blancs cuits, 80 g de petites pâtes, 1,2 l d’eau","Faire revenir oignon, carottes et céleri en dés 5 min|Ajouter tomates, haricots blancs et eau, mijoter 25 min|Jeter les pâtes dans la soupe, cuire 8 à 10 min|Servir avec un filet d’huile d’olive"]]],
+printemps:["Salade de la semaine",[
+["Salade d’asperges et œuf mollet","Pour 4 · Préparation 15 min · Cuisson 10 min","800 g d’asperges vertes, 4 œufs, 1 citron, 4 c. à soupe d’huile d’olive, sel, poivre","Casser le bout dur des asperges et les cuire 5 min à l’eau bouillante|Plonger les œufs 6 min dans l’eau bouillante, puis les écaler|Mélanger citron, huile, sel et poivre|Dresser les asperges, poser les œufs et arroser"],
+["Salade radis, concombre, fromage frais","Pour 4 · Préparation 15 min · Sans cuisson","2 bottes de radis, 1 concombre, 200 g de fromage frais, 1 bouquet de ciboulette, 2 c. à soupe d’huile de colza","Couper radis et concombre en fines rondelles|Mélanger le fromage frais, la ciboulette et l’huile|Disposer les légumes dans un saladier|Ajouter la sauce et servir bien frais"],
+["Salade petits pois, feta, menthe","Pour 4 · Préparation 10 min · Cuisson 5 min","400 g de petits pois écossés, 150 g de feta, 10 feuilles de menthe, 1 citron, 3 c. à soupe d’huile d’olive","Cuire les petits pois 4 à 5 min dans l’eau bouillante salée|Les rafraîchir sous l’eau froide et les égoutter|Émietter la feta, ciseler la menthe|Mélanger avec le jus de citron et l’huile"],
+["Salade de pommes de terre nouvelles","Pour 4 · Préparation 15 min · Cuisson 20 min","800 g de pommes de terre nouvelles, 2 échalotes, 1 bouquet de persil, 1 c. à soupe de moutarde, 4 c. à soupe d’huile, 2 c. à soupe de vinaigre","Cuire les pommes de terre 20 min à l’eau, avec la peau|Hacher échalotes et persil|Préparer la vinaigrette moutarde, huile et vinaigre|Mélanger aux pommes de terre encore tièdes"]]],
+ete:["Salade de la semaine",[
+["Tomates, mozzarella, basilic","Pour 4 · Préparation 10 min · Sans cuisson","4 grosses tomates, 2 boules de mozzarella, 1 bouquet de basilic, 4 c. à soupe d’huile d’olive, fleur de sel","Trancher tomates et mozzarella en rondelles|Alterner les tranches sur un plat|Parsemer de feuilles de basilic|Arroser d’huile d’olive, saler et poivrer"],
+["Taboulé frais","Pour 4 · Préparation 20 min · Repos 1 h","200 g de semoule fine, 4 tomates, 1 concombre, 1 bouquet de menthe, 2 citrons, 6 c. à soupe d’huile d’olive","Verser 200 ml d’eau chaude sur la semoule et couvrir 5 min|Égrener à la fourchette avec un peu d’huile|Ajouter légumes en petits dés, menthe, citron et huile|Laisser reposer 1 h au frigo"],
+["Pastèque, feta, menthe","Pour 4 · Préparation 10 min · Sans cuisson","800 g de pastèque, 150 g de feta, 10 feuilles de menthe, 1 citron vert, 2 c. à soupe d’huile d’olive","Couper la pastèque en cubes, en retirant les pépins|Émietter la feta par-dessus|Ajouter la menthe ciselée|Arroser de jus de citron vert et d’huile d’olive"],
+["Salade niçoise","Pour 4 · Préparation 20 min · Cuisson 10 min","4 tomates, 150 g de haricots verts, 4 œufs, 1 boîte de thon, 1 poignée d’olives, huile d’olive, vinaigre","Cuire les haricots verts 8 min et les œufs durs 10 min|Couper les tomates en quartiers|Dresser tomates, haricots, œufs coupés, thon et olives|Assaisonner d’huile d’olive et d’un peu de vinaigre"]]],
+automne:["Velouté de la semaine",[
+["Velouté de potimarron","Pour 4 · Préparation 15 min · Cuisson 25 min","1 potimarron (environ 1 kg), 1 oignon, 1 l de bouillon, 10 cl de crème, 1 filet d’huile","Laver le potimarron, le couper en cubes sans l’éplucher|Faire revenir l’oignon à l’huile, ajouter le potimarron|Couvrir de bouillon, cuire 25 min|Mixer avec la crème, saler et poivrer"],
+["Crème de champignons","Pour 4 · Préparation 10 min · Cuisson 20 min","500 g de champignons de Paris, 1 oignon, 1 l de bouillon, 10 cl de crème, 20 g de beurre","Émincer les champignons et l’oignon|Les faire revenir au beurre 8 min|Ajouter le bouillon, cuire 12 min|Mixer avec la crème et servir bien chaud"],
+["Soupe de butternut au curry","Pour 4 · Préparation 15 min · Cuisson 25 min","1 butternut (environ 1 kg), 1 oignon, 1 c. à café de curry, 20 cl de lait de coco, 600 ml d’eau","Éplucher le butternut et le couper en cubes|Faire revenir l’oignon avec le curry 2 min|Ajouter le butternut et l’eau, cuire 20 min|Mixer avec le lait de coco"],
+["Soupe de panais et noisettes","Pour 4 · Préparation 15 min · Cuisson 25 min","600 g de panais, 1 oignon, 1 l de bouillon, 30 g de noisettes, 1 filet d’huile d’olive","Éplucher et couper panais et oignon|Les faire revenir 5 min à l’huile|Couvrir de bouillon, cuire 20 min, puis mixer|Servir avec des noisettes concassées"]]]
+};
+// Fruits et légumes de saison (France), par mois.
+var FL=[
+[["clémentine","orange","pomme","poire","kiwi","citron"],["poireau","chou","carotte","endive","navet","épinard"]],
+[["orange","pamplemousse","pomme","poire","kiwi","citron"],["chou","poireau","endive","betterave","panais","céleri-rave"]],
+[["pomme","poire","kiwi","pamplemousse","citron","orange"],["radis","épinard","chou-fleur","poireau","carotte","asperge"]],
+[["fraise","rhubarbe","pomme","kiwi","citron"],["asperge","radis","épinard","laitue","artichaut","carotte nouvelle"]],
+[["fraise","cerise","rhubarbe","pomme","citron"],["asperge","petit pois","radis","artichaut","fève","laitue"]],
+[["fraise","cerise","abricot","framboise","melon","groseille"],["courgette","petit pois","concombre","haricot vert","fève","radis"]],
+[["abricot","pêche","melon","framboise","cerise","pastèque"],["tomate","courgette","aubergine","poivron","concombre","haricot vert"]],
+[["pêche","prune","melon","pastèque","mûre","figue"],["tomate","aubergine","poivron","courgette","maïs","haricot vert"]],
+[["raisin","figue","prune","poire","pomme","mûre"],["tomate","aubergine","poivron","champignon","courgette","maïs"]],
+[["pomme","poire","raisin","coing","noix","châtaigne"],["potiron","champignon","chou-fleur","poireau","betterave","carotte"]],
+[["pomme","poire","coing","châtaigne","noix","clémentine"],["potimarron","chou","poireau","panais","endive","mâche"]],
+[["clémentine","orange","mandarine","kiwi","pomme","poire"],["mâche","endive","chou","poireau","topinambour","carotte"]]
+];
+// Actu positive : une phrase, une date (AAAA-MM-JJ) et une source. Les infos de plus de 60 jours disparaissent toutes seules ;
+// si plus aucune n’est récente, l’écran est retiré. Ajoute simplement de nouvelles lignes.
+var NEWS=[
+{d:"2026-10-10",t:"Paul Seixas devient le plus jeune vainqueur du Tour de Lombardie.",s:"RMC Sport"},
+{d:"2026-10-12",t:"Près du Stade de France, un coureur a attendu son rival égaré à quelques mètres de la ligne pour lui offrir la victoire.",s:"Midi Libre"},
+{d:"2026-10-13",t:"Un prof d’EPS remporte le tout premier Ironman de Versailles, devant près de 1 500 triathlètes.",s:"Le Média Positif"},
+{d:"2026-10-13",t:"La France pourrait compter 30 % de médecins en plus d’ici 2040, selon une étude statistique.",s:"Nice-Matin"},
+{d:"2026-10-13",t:"Les deux tableaux de Renoir volés sur la Côte d’Azur ont été retrouvés.",s:"Europe 1"},
+{d:"2026-10-15",t:"Au Havre, Engie et CMA CGM vont transformer des déchets en carburant pour porte-conteneurs.",s:"Le Média Positif"}
+];
+var FRESH=[];
+function fresh(){var n=today();FRESH=NEWS.filter(function(x){var a=Math.floor(Date.parse(x.d)/864e5);return n-a>=0&&n-a<=60})}
+var FUN={
+"clémentine":"La clémentine est un croisement entre mandarine et orange douce, apparu au début du XXe siècle en Algérie.",
+"orange":"Une orange est composée à environ 85 % d’eau.",
+"pomme":"Il existe plus de 7 000 variétés de pommes dans le monde.",
+"poire":"La poire fait partie de la famille des roses, comme la pomme.",
+"kiwi":"À poids égal, le kiwi contient plus de vitamine C que l’orange.",
+"citron":"Un citronnier peut donner des fruits presque toute l’année.",
+"pamplemousse":"Le pamplemousse est né d’un croisement entre l’oranger et le pomelo.",
+"fraise":"Les petits grains de la fraise sont ses vrais fruits : la partie rouge est un renflement de la fleur.",
+"rhubarbe":"On mange la tige de la rhubarbe, mais ses feuilles sont toxiques.",
+"cerise":"La cerise est un fruit à noyau, cousin de la prune, de la pêche et de l’abricot.",
+"abricot":"L’abricotier fleurit très tôt, ce qui le rend fragile face aux gelées de printemps.",
+"framboise":"Une framboise est formée de dizaines de petits grains, chacun avec sa graine.",
+"melon":"Le melon appartient à la même famille que le concombre et la courge.",
+"groseille":"La groseille est très acidulée et riche en vitamine C.",
+"pêche":"La nectarine est tout simplement une pêche à peau lisse.",
+"pastèque":"La pastèque contient plus de 90 % d’eau.",
+"prune":"Les pruneaux sont des prunes séchées, comme celles d’Agen.",
+"mûre":"Les mûres poussent sur des ronces, souvent au bord des chemins.",
+"figue":"Ce que l’on mange dans une figue, ce sont en fait de minuscules fleurs enfermées dans le fruit.",
+"raisin":"Certaines vignes peuvent vivre plus de 100 ans.",
+"coing":"Le coing est cousin de la pomme et de la poire, mais il se mange surtout cuit, en gelée ou en pâte de fruit.",
+"noix":"Le noyer, l’arbre des noix, peut dépasser 25 mètres de haut.",
+"châtaigne":"Il ne faut pas confondre la châtaigne avec le marron d’Inde, qui n’est pas comestible.",
+"mandarine":"La mandarine se pèle facilement car sa peau est très peu adhérente.",
+"poireau":"On surnomme parfois le poireau « l’asperge du pauvre ».",
+"chou":"Le brocoli et le chou-fleur font partie de la même famille que le chou.",
+"carotte":"Les premières carottes cultivées étaient violettes ou jaunes, pas orange.",
+"endive":"L’endive a été découverte par hasard en Belgique, au XIXe siècle.",
+"navet":"Le navet était un aliment de base en Europe avant l’arrivée de la pomme de terre.",
+"épinard":"Les épinards contiennent moins de fer que la légende ne le dit.",
+"betterave":"La betterave colore tout sur son passage grâce à un pigment, la bétanine.",
+"panais":"Le panais est un cousin de la carotte, au goût légèrement sucré.",
+"céleri-rave":"Le céleri-rave est la racine d’une variété de céleri.",
+"radis":"Le radis pousse très vite : certains sont prêts en moins d’un mois.",
+"chou-fleur":"Ce que l’on mange dans un chou-fleur, ce sont des fleurs encore en boutons.",
+"asperge":"Une asperge peut grandir de plusieurs centimètres par jour au printemps.",
+"laitue":"La laitue est cultivée depuis l’Antiquité.",
+"artichaut":"L’artichaut est une fleur de chardon que l’on mange avant qu’elle s’ouvre.",
+"carotte nouvelle":"Les carottes nouvelles sont récoltées jeunes, c’est ce qui les rend plus tendres.",
+"petit pois":"Les petits pois sont des graines qui poussent dans des gousses.",
+"fève":"La fève est l’un des plus anciens légumes cultivés par l’être humain.",
+"courgette":"La courgette est cueillie avant maturité : laissée sur pied, elle devient énorme.",
+"concombre":"Le concombre est composé à environ 95 % d’eau.",
+"haricot vert":"Le haricot vert est un haricot cueilli jeune, avec sa gousse.",
+"tomate":"Botaniquement, la tomate est un fruit, même si on la cuisine comme un légume.",
+"aubergine":"L’aubergine est une baie, cousine de la tomate et de la pomme de terre.",
+"poivron":"Un poivron rouge est un poivron vert qui a mûri plus longtemps.",
+"maïs":"Un épi de maïs compte presque toujours un nombre pair de rangées de grains.",
+"champignon":"Les champignons de Paris sont souvent cultivés dans d’anciennes carrières souterraines.",
+"potiron":"Le potiron et la citrouille sont de proches cousins.",
+"potimarron":"On peut manger la peau du potimarron : il suffit de bien la cuire.",
+"mâche":"La mâche résiste bien au froid et se récolte en plein hiver.",
+"topinambour":"Le topinambour est la racine d’une plante de la famille du tournesol."
+};
+var MOIS=["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
+var SAISON=["hiver","hiver","printemps","printemps","printemps","ete","ete","ete","automne","automne","automne","hiver"];
+
+// Humeur de la météo : une phrase au hasard selon la situation.
+var HUM={
+orage:["Ça gronde dehors : rentre avant que le ciel se fâche.","Orage en vue : même les canards restent au bureau."],
+neige:["Il neige : sors la luge, ou la pelle.","Neige au programme : prudence sur la route, et bonnet obligatoire."],
+pluie:["Il pleut comme vache qui pisse : parapluie obligatoire.","Temps de canard : ressors les bottes.","Il tombe des cordes : prévois de quoi te sécher."],
+brouillard:["Brouillard à couper au couteau : phares allumés.","On n’y voit rien : roule doucement."],
+vent:["Ça souffle fort : accroche ta coiffure.","Vent à décorner les bœufs : tiens bien ton parapluie, si tu oses."],
+glace:["Froid de canard : bonnet, gants, écharpe, et n’oublie pas tes chaussettes !","Il gèle : pense au grattoir pour le pare-brise."],
+frais:["Il fait frisquet : la petite veste ne sera pas de trop.","Un temps à enfiler un pull."],
+doux:["Temps idéal : le ciel est de bonne humeur.","Il fait bon : profite de ta pause dehors."],
+chaud:["Il fait beau et chaud : lunettes de soleil et crème solaire.","Un petit air de vacances : bois de l’eau."],
+canicule:["Chaleur à fondre : de l’eau, de l’ombre et des glaçons.","Il fait une chaleur de four : rideaux tirés et verre d’eau à la main."],
+gris:["Ciel gris, mais on garde le sourire."]
+};
 function today(){var d=new Date();return Math.floor((d.getTime()-d.getTimezoneOffset()*60000)/864e5)}
-function pick(a){return a[today()%a.length]}
+var D=today();
+function pick(a,o){return a[(D+(o||0))%a.length]}
+function $(i){return document.getElementById(i)}
+function pills(id,arr){var el=$(id);el.innerHTML="";arr.forEach(function(t){var s=document.createElement("span");s.className="pill";s.textContent=t;el.appendChild(s)})}
+
 function setText(){
-  var j=pick(BLAGUES);
-  document.getElementById('jq').textContent=j[0];
-  document.getElementById('ja').textContent=j[1];
-  document.getElementById('an').textContent=pick(ANECDOTES);
-  document.getElementById('po').textContent=pick(POSITIF);
-  document.getElementById('mi').textContent=pick(MISSIONS);
+D=today();var M=new Date().getMonth();
+var j=pick(BLAGUES);$("jq").textContent=j[0];$("ja").textContent=j[1];
+var s=SEAS[M];$("ft").textContent="Fun fact : "+s[0];$("ff").textContent=pick(s[1]);
+var r=REC[SAISON[M]],week=Math.floor(D/7),rc=r[1][week%r[1].length];
+$("rt").textContent=r[0];$("rn").textContent=rc[0];$("rm").textContent=rc[1];$("ri").textContent="Ingrédients : "+rc[2]+".";
+var ol=$("rs");ol.innerHTML="";rc[3].split("|").forEach(function(x){var li=document.createElement("li");li.textContent=x;ol.appendChild(li)});
+$("an").textContent=pick(ANECDOTES);
+$("ft2").textContent="Fruits et légumes de "+MOIS[M];
+pills("fr",FL[M][0]);pills("lg",FL[M][1]);
+var all=FL[M][0].concat(FL[M][1]),sp=pick(all);$("st").textContent="Star du jour : "+sp;$("sf").textContent=FUN[sp]||"";
+if(FRESH.length){var nw=pick(FRESH);$("nt").textContent=nw.t;$("ns").textContent="Source : "+nw.s}
+$("po").textContent=pick(POSITIF);$("mi").textContent=pick(MISSIONS);
 }
-function weekend(){
-  var n=new Date(),d=n.getDay(),h=n.getHours();
-  var cn=document.getElementById('cn'),cl=document.getElementById('cl');
-  if(d===0||d===6||(d===5&&h>=17)){cn.textContent='🎊';cl.textContent="C'est le week-end, profitez-en bien !";return}
-  if(d===5){var r=17-h;cn.textContent=r+' h';cl.textContent="avant le week-end. Courage, on y est presque !";return}
-  var left=5-d;cn.textContent=left+(left>1?' jours':' jour');cl.textContent="avant le week-end (vendredi 17h)";
+
+function cat(i){
+var d=W,c=d.weather_code[i],t=d.temperature_2m_max[i],pp=d.precipitation_probability_max[i],w=d.wind_speed_10m_max[i];
+if(c>=95)return"orage";
+if((c>=71&&c<=77)||c===85||c===86)return"neige";
+if((c>=51&&c<=67)||(c>=80&&c<=82)||pp>=70)return"pluie";
+if(c===45||c===48)return"brouillard";
+if(w>=50)return"vent";
+if(t<=4)return"glace";if(t<12)return"frais";if(t<22)return(c>=2?"gris":"doux");if(t<30)return"chaud";return"canicule";
 }
-function clock(){var n=new Date();document.getElementById('clock').textContent=('0'+n.getHours()).slice(-2)+':'+('0'+n.getMinutes()).slice(-2)}
-var slides=[].slice.call(document.querySelectorAll('.slide')),i=-1,t;
+var W=null,JOURS=["Aujourd’hui","Demain","Après-demain"];
+function renderW(){
+if(!W)return;
+try{
+for(var i=0;i<3;i++){
+var tx=Math.round(W.temperature_2m_max[i]),tn=Math.round(W.temperature_2m_min[i]),ph=pick(HUM[cat(i)],i);
+if(i===0){$("w0").textContent=ph;$("w0t").textContent="Aujourd’hui : "+tn+"° le matin, "+tx+"° l’après-midi"}
+else{var e=$("w"+i);e.style.display="";e.textContent=JOURS[i]+" ("+tn+"° / "+tx+"°) : "+ph}
+}
+$("sw").classList.remove("off")}catch(x){}}
+function loadW(){
+try{fetch("https://api.open-meteo.com/v1/forecast?latitude=43.545&longitude=1.512&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max&timezone=Europe%2FParis&forecast_days=3")
+.then(function(r){if(!r.ok)throw 1;return r.json()}).then(function(j){W=j.daily;renderW()}).catch(function(){if(!W)setTimeout(loadW,120000)})}catch(e){}
+}
+
+function easter(y){var a=y%19,b=Math.floor(y/100),c=y%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),mo=Math.floor((h+l-7*m+114)/31),da=((h+l-7*m+114)%31)+1;return new Date(y,mo-1,da)}
+function holidays(y){var e=easter(y),p=function(n){return new Date(e.getFullYear(),e.getMonth(),e.getDate()+n)};
+return[[new Date(y,0,1),"le Jour de l’An"],[p(1),"le lundi de Pâques"],[new Date(y,4,1),"la Fête du Travail"],[new Date(y,4,8),"le 8 mai"],[p(39),"l’Ascension"],[p(50),"le lundi de Pentecôte"],[new Date(y,6,14),"la Fête nationale"],[new Date(y,7,15),"l’Assomption"],[new Date(y,10,1),"la Toussaint"],[new Date(y,10,11),"l’Armistice"],[new Date(y,11,25),"Noël"]]}
+function nextHoliday(){var n=new Date(),t0=new Date(n.getFullYear(),n.getMonth(),n.getDate()),all=holidays(n.getFullYear()).concat(holidays(n.getFullYear()+1));
+for(var k=0;k<all.length;k++){var dd=Math.round((all[k][0]-t0)/864e5);if(dd>=0){var el=$("jf");el.textContent=dd===0?"Aujourd’hui, c’est férié : "+all[k][1]+" !":"Prochain jour férié : "+all[k][1]+", dans "+dd+(dd>1?" jours":" jour");return}}}
+function loadH(){
+try{var n=new Date(),mm=("0"+(n.getMonth()+1)).slice(-2),dd=("0"+n.getDate()).slice(-2);
+fetch("https://fr.wikipedia.org/api/rest_v1/feed/onthisday/events/"+mm+"/"+dd).then(function(r){return r.json()}).then(function(j){
+var ev=(j.events||[]).filter(function(x){return x.year&&x.text&&x.text.length<=170});
+if(!ev.length)return;var e=ev[D%ev.length];$("hy").textContent=e.year;$("ht").textContent=e.text;$("sh").classList.remove("off")}).catch(function(){})}catch(x){}
+}
+function weekend(){nextHoliday();
+var n=new Date(),d=n.getDay(),h=n.getHours(),cn=$("cn"),cl=$("cl");
+if(d===0||d===6||(d===5&&h>=17)){cn.textContent="Yes !";cl.textContent="C’est le week-end, profitez-en bien !";return}
+if(d===5){cn.textContent=(17-h)+" h";cl.textContent="avant le week-end. Courage, on y est presque !";return}
+var left=5-d;cn.textContent=left+(left>1?" jours":" jour");cl.textContent="avant le week-end (vendredi 17h)";
+}
+function clock(){var n=new Date();$("clock").textContent=("0"+n.getHours()).slice(-2)+":"+("0"+n.getMinutes()).slice(-2)}
+
+fresh();if(!FRESH.length){var sn=$("sn");sn.parentNode.removeChild(sn)}
+var slides=[].slice.call(document.querySelectorAll(".slide")),i=-1,t;
 function next(){
-  i=(i+1)%slides.length;
-  if(i===0){setText();weekend()}
-  slides.forEach(function(s,k){s.classList.toggle('on',k===i)});
-  document.body.style.background=getComputedStyle(slides[i]).getPropertyValue('--bg');
-  var d=+slides[i].dataset.d,f=document.getElementById('fill');
-  f.style.transition='none';f.style.width='0';f.offsetWidth;f.style.transition='width '+d+'ms linear';f.style.width='100%';
-  clearTimeout(t);t=setTimeout(next,d);
+do{i=(i+1)%slides.length}while(slides[i].classList.contains("off"));
+if(i===0){setText();weekend();renderW()}
+slides.forEach(function(s,k){s.classList.toggle("on",k===i)});
+document.body.style.background=getComputedStyle(slides[i]).getPropertyValue("--bg");
+var d=+slides[i].dataset.d,f=$("fill");
+f.style.transition="none";f.style.width="0";f.offsetWidth;f.style.transition="width "+d+"ms linear";f.style.width="100%";
+clearTimeout(t);t=setTimeout(next,d);
 }
-setText();weekend();clock();setInterval(clock,10000);next();
+setText();weekend();clock();setInterval(clock,10000);loadW();setInterval(loadW,1800000);loadH();setInterval(loadH,3600000);next();
 </script>
 </body>
 </html>
